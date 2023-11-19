@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SupermarkerWEB.Data;
 using SupermarkerWEB.Models;
 
-namespace SupermarkerWEB.Pages.Providers
+namespace SupermarkerWEB.Pages.Categories
 {
     public class DeleteModel : PageModel
     {
@@ -16,37 +16,38 @@ namespace SupermarkerWEB.Pages.Providers
         }
 
         [BindProperty]
-        public Provider Provider { get; set; }
+        public Category Category { get; set; } = default!;
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Provider == null)
+            if (id == null || _context.Categories == null)
             {
                 return NotFound();
             }
-            var provider = await _context.Provider.FirstOrDefaultAsync(c => c.Id == id);
-            if (provider == null)
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            if (category == null)
             {
                 return NotFound();
             }
             else
             {
-                Provider = provider;
+                Category = category;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Provider == null)
+            if (id == null || _context.Categories == null)
             {
                 return NotFound();
             }
-            var provider = await _context.Provider.FindAsync(id);
-            if (provider != null)
+            var category = await _context.Categories.FindAsync(id);
+            if (category != null)
             {
-                Provider = provider;
-                _context.Provider.Remove(provider);
-                await _context.SaveChangesAsync();
+                Category = category;
+                _context.Categories.Remove(category);
+                 await _context.SaveChangesAsync();
             }
             return RedirectToPage("./Index");
         }

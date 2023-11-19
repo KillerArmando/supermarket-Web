@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using SupermarkerWEB.Data;
 using SupermarkerWEB.Models;
 
-namespace SupermarkerWEB.Pages.Providers
+namespace SupermarkerWEB.Pages.Pay_Modes
 {
     public class CreateModel : PageModel
     {
@@ -12,22 +12,21 @@ namespace SupermarkerWEB.Pages.Providers
         {
             _context = context;
         }
-
         public IActionResult OnGet()
         {
             return Page();
         }
 
         [BindProperty]
-        public Provider Provider { get; set; } = default!;
+        public PayMode PayMode { get; set; } = default!;
 
         public async Task<ActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid || _context.Provider == null || Provider == null)
+            if (!ModelState.IsValid || _context.PayMode == null || PayMode == null)
             {
                 return Page();
             }
-            _context.Provider.Add(Provider);
+            _context.PayMode.Add(PayMode);
             await _context.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
